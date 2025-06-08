@@ -19,10 +19,10 @@ export default function RootLayout({
   return (
     
     <html lang="en">
-      <Header/>
       <body
         className={`${roboto.className} bg-white text-black`}
-      >
+        >
+        <Header/>
         {children}
       </body>
     </html>
