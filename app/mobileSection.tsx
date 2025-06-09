@@ -93,6 +93,65 @@ export default function MobileSection() {
           date="June 9, 2025"
         />
       </div>
+      <div className="flex w-full px-6 mt-15">
+        <div className="flex flex-row justify-between w-full">
+          <div className="flex flex-col">
+            <h1 className="text-sm text-start font-bold text-neutral-100">
+              COMPANY
+            </h1>
+            <p className="text-sm text-start font-light text-neutral-400 mt-4">
+              About Us
+            </p>
+            <p className="text-sm text-start font-light text-neutral-400 mt-4">
+              Career
+            </p>
+            <p className="text-sm text-start font-light text-neutral-400 mt-4">
+              Press
+            </p>
+            <p className="text-sm text-start font-light text-neutral-400 mt-4">
+              Blog
+            </p>
+          </div>
+          <div className="flex flex-col">
+            <h1 className="text-sm text-start font-bold text-neutral-100">
+              SERVICES
+            </h1>
+            <p className="text-sm text-start font-light text-neutral-400 mt-4">
+              Residential
+            </p>
+            <p className="text-sm text-start font-light text-neutral-400 mt-4">
+              Office Cleaning
+            </p>
+            <p className="text-sm text-start font-light text-neutral-400 mt-4">
+              Commercial Cleaning
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col w-full px-6 mt-15">
+        <h1 className="text-sm text-start font-bold text-neutral-100">
+          SUPPORT
+        </h1>
+        <p className="text-sm text-start font-light text-neutral-400 mt-4">
+          Contact Us
+        </p>
+        <p className="text-sm text-start font-light text-neutral-400 mt-4">
+          FAQ&apos;s
+        </p>
+      </div>
+      <div className="flex flex-col w-full px-6 mt-10 items-center">
+        <img src="./Logo2.png" className="w-[65px] h-[26px]" alt="" />
+        <div className="flex flex-row mt-10 gap-5">
+          <img src="./medsos1.png" className="w-[10px] h-[22px]" alt="" />
+          <img src="./medsos2.png" className="w-[22px] h-[18px]" alt="" />
+          <img src="./medsos3.png" className="w-[20px] h-[20px]" alt="" />
+          <img src="./medsos4.png" className="w-[20px] h-[20px]" alt="" />
+        </div>
+        <p className="text-sm text-neutral-200 font-light text-center mt-4 mb-15">
+          © Shield Cleaning Co. All rights reserved Terms of Service . Privacy
+          Policy
+        </p>
+      </div>
     </div>
   );
 }
