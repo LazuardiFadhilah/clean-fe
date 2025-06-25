@@ -1,11 +1,15 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { FiAlignJustify } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiX } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const Router = useRouter();
+
   return (
     <>
         <header className="mx-6 lg:mx-32 mt-6">
@@ -26,12 +30,14 @@ export default function Header() {
               </div>
 
               {/* Login Button */}
+             <Link href="/login">
               <Button
+              
                 variant="outline"
                 className="border-2 bg-white text-primary hover:text-primaryLight h-10"
               >
                 Login
-              </Button>
+              </Button></Link>
 
               {/* Mobile Menu Icon */}
               <FiAlignJustify
@@ -72,6 +78,9 @@ export default function Header() {
           {/* Bottom Login Button */}
           <div className="p-6">
             <Button
+            onClick={()=> {
+              Router.push("/login");
+            }}
               variant="secondary"
               className="w-full bg-primary text-white hover:text-primaryLight h-10"
             >

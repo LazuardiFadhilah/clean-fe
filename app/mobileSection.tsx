@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -7,7 +8,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import ArticleCard from "@/components/articleCard";
+
+import {useRouter} from "next/navigation";
 export default function MobileSection() {
+  const Router = useRouter();
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex items-center justify-center">
@@ -16,7 +20,14 @@ export default function MobileSection() {
         </h1>
       </div>
       <div className="mt-7 px-8 w-full">
-        <Button className="text-white w-full">Booking from $80</Button>
+        <Button onClick={()=>{
+          const token = localStorage.getItem("token");
+          if (!token) {
+            Router.push("/appointment");
+          } else {
+            Router.push("/login");
+          }
+        }}  className="text-white w-full">Booking from $80</Button>
       </div>
       <div>
         <img src="./illu4.png" className="object-cover mt-3" />

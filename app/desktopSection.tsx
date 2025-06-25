@@ -9,11 +9,17 @@ import {
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ArticleCard from "@/components/articleCard";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
+
 
 export default function DesktopHeroSection() {
+  const Router = useRouter();
   const [bedroom, setBedroom] = useState("");
   const [bathroom, setBathroom] = useState("");
   const [cleanType, setCleanType] = useState("");
+  
+
 
   return (
     <>
@@ -139,7 +145,14 @@ export default function DesktopHeroSection() {
                 </SelectContent>
               </Select>
             </div>
-            <Button className="!h-[50px] text-white bg-primary border-2 border-primary hover:border-primary rounded-xl -ml-2">
+            <Button onClick={()=>{
+              const token = localStorage.getItem("token");
+              if (!token) {
+                Router.push("/login");
+              } else {
+                Router.push("/appointment");
+              }
+            }} className="!h-[50px] text-white bg-primary border-2 border-primary hover:border-primary rounded-xl -ml-2">
               Booking from $80
             </Button>
           </div>
@@ -265,6 +278,7 @@ export default function DesktopHeroSection() {
           <p className="text-sm text-neutral-200 font-light text-center mt-4">
             © Clean Co. All Rights Reserved . Terms of Service . Privacy Policy
           </p>
+          
         </div>
       </div>
     </>

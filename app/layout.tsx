@@ -22,7 +22,6 @@ export default function RootLayout({
       <body
         className={`${montserrat.className} bg-white text-black w-full min-h-screen`}
         >
-        <Header/>
         {children}
       </body>
     </html>
