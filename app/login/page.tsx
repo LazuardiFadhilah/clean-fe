@@ -1,14 +1,16 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 export default function Login() {
   return (
     <>
       <div className="flex flex-col items-center container mt-10">
         <div className="flex justify-center">
+         <Link href="/">
           <img
             src="./logo.png"
             className="w-[70px] h-[30px] md:w-[114px] md:h-[45px]"
             alt=""
-          />
+          /></Link>
         </div>
         <h1 className="text-center text-2xl md:text-4xl font-bold text-neutral-100 mt-[72px]">
           Login

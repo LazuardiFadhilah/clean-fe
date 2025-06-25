@@ -10,16 +10,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ArticleCard from "@/components/articleCard";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
-
+import { useRouter } from "next/navigation";
 
 export default function DesktopHeroSection() {
   const Router = useRouter();
   const [bedroom, setBedroom] = useState("");
   const [bathroom, setBathroom] = useState("");
   const [cleanType, setCleanType] = useState("");
-  
-
 
   return (
     <>
@@ -145,14 +142,17 @@ export default function DesktopHeroSection() {
                 </SelectContent>
               </Select>
             </div>
-            <Button onClick={()=>{
-              const token = localStorage.getItem("token");
-              if (!token) {
-                Router.push("/login");
-              } else {
-                Router.push("/appointment");
-              }
-            }} className="!h-[50px] text-white bg-primary border-2 border-primary hover:border-primary rounded-xl -ml-2">
+            <Button
+              onClick={() => {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                  Router.push("/appointment");
+                } else {
+                  Router.push("/login");
+                }
+              }}
+              className="!h-[50px] text-white bg-primary border-2 border-primary hover:border-primary rounded-xl -ml-2"
+            >
               Booking from $80
             </Button>
           </div>
@@ -230,47 +230,47 @@ export default function DesktopHeroSection() {
           </div>
           <div className="flex flex-row gap-[30px] lg:gap-[100px]">
             <div className="flex flex-col gap-[10px]">
-            <h1 className="mb-[15px] text-sm text-start font-bold text-neutral-100">
-              COMPANY
-            </h1>
-            <p className="text-sm text-start font-light text-neutral-400">
-              About Us
-            </p>
-            <p className="text-sm text-start font-light text-neutral-400">
-              Career
-            </p>
-            <p className="text-sm text-start font-light text-neutral-400">
-              Press
-            </p>
-            <p className="text-sm text-start font-light text-neutral-400">
-              Blog
-            </p>
-          </div>
-          <div className="flex flex-col gap-[10px]">
-            <h1 className="mb-[15px] text-sm text-start font-bold text-neutral-100">
-              SERVICES
-            </h1>
-            <p className="text-sm text-start font-light text-neutral-400">
-              Residential
-            </p>
-            <p className="text-sm text-start font-light text-neutral-400">
-              Office Cleaning
-            </p>
-            <p className="text-sm text-start font-light text-neutral-400">
-              Commercial Cleaning
-            </p>
-          </div>
-          <div className="flex flex-col gap-[10px]">
-            <h1 className="mb-[15px] text-sm text-start font-bold text-neutral-100">
-              SUPPORT
-            </h1>
-            <p className="text-sm text-start font-light text-neutral-400">
-              Contact Us
-            </p>
-            <p className="text-sm text-start font-light text-neutral-400">
-              FA&Q&apos;s
-            </p>
-          </div>
+              <h1 className="mb-[15px] text-sm text-start font-bold text-neutral-100">
+                COMPANY
+              </h1>
+              <p className="text-sm text-start font-light text-neutral-400">
+                About Us
+              </p>
+              <p className="text-sm text-start font-light text-neutral-400">
+                Career
+              </p>
+              <p className="text-sm text-start font-light text-neutral-400">
+                Press
+              </p>
+              <p className="text-sm text-start font-light text-neutral-400">
+                Blog
+              </p>
+            </div>
+            <div className="flex flex-col gap-[10px]">
+              <h1 className="mb-[15px] text-sm text-start font-bold text-neutral-100">
+                SERVICES
+              </h1>
+              <p className="text-sm text-start font-light text-neutral-400">
+                Residential
+              </p>
+              <p className="text-sm text-start font-light text-neutral-400">
+                Office Cleaning
+              </p>
+              <p className="text-sm text-start font-light text-neutral-400">
+                Commercial Cleaning
+              </p>
+            </div>
+            <div className="flex flex-col gap-[10px]">
+              <h1 className="mb-[15px] text-sm text-start font-bold text-neutral-100">
+                SUPPORT
+              </h1>
+              <p className="text-sm text-start font-light text-neutral-400">
+                Contact Us
+              </p>
+              <p className="text-sm text-start font-light text-neutral-400">
+                FA&Q&apos;s
+              </p>
+            </div>
           </div>
         </div>
         <div className="flex flex-row items-center justify-center mt-10 gap-[20px]">
@@ -278,7 +278,6 @@ export default function DesktopHeroSection() {
           <p className="text-sm text-neutral-200 font-light text-center mt-4">
             © Clean Co. All Rights Reserved . Terms of Service . Privacy Policy
           </p>
-          
         </div>
       </div>
     </>
