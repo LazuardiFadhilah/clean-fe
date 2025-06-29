@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import {useRouter} from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
@@ -9,8 +10,32 @@ import { Label } from "@/components/ui/label";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";
 
+import {LoginUser} from "@/lib/api/user";
+
 export default function Login() {
+  const router = useRouter();
   const [show, setShow] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const onSubmit = async ()=>{
+     if (!email || !password) {
+        setErrorMsg("Email and password are required");
+        return;
+      }
+    try {
+     setErrorMsg("");
+      const user = await LoginUser({ email, password });
+      
+      console.log("Login successful:", user);
+      if(user?.token) {
+        localStorage.setItem("token", user.token);} // Simpan token ke localStorage
+        router.push("/"); // Redirect ke halaman utama setelah login
+      
+    } catch (error) {
+      setErrorMsg("email atau password salah");
+    }
+  }
   return (
     <>
       <div className="flex flex-col items-center container mx-auto mt-10">
@@ -53,6 +78,8 @@ export default function Login() {
           <Input
             type="email"
             id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             className="mt-[10px] border-grey-800 border-2"
           />
@@ -68,6 +95,8 @@ export default function Login() {
               id="password"
               type={show ? "text" : "password"}
               placeholder="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="pr-10 border-grey-800 border-2"
             />
             <button
@@ -80,7 +109,7 @@ export default function Login() {
           </div>
           <Button
             className="w-full mt-[30px] h-[48px] bg-primary text-white font-semibold text-sm hover:bg-primary/90"
-            type="submit">Continue</Button>
+            type="submit" onClick={onSubmit}>Continue</Button>
             <span className="text-sm text-neutral-400 mt-[20px]">
               Don't have an account?
               <Link
