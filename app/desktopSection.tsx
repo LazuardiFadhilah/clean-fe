@@ -146,9 +146,9 @@ export default function DesktopHeroSection() {
               onClick={() => {
                 const token = localStorage.getItem("token");
                 if (!token) {
-                  Router.push("/appointment");
-                } else {
                   Router.push("/login");
+                } else {
+                  Router.push("/appointment");
                 }
               }}
               className="!h-[50px] text-white bg-primary border-2 border-primary hover:border-primary rounded-xl -ml-2"
