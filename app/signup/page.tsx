@@ -12,13 +12,16 @@ import { FaRegEyeSlash } from "react-icons/fa6";
 
 import { LoginUser } from "@/lib/api/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Login() {
   const router = useRouter();
   const [show, setShow] = useState(false);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [agree, setAgree] = useState(false);
 
   const onSubmit = async () => {
     if (!email || !password) {
@@ -78,9 +81,20 @@ export default function Login() {
           <div className="w-full max-w-[calc(100%-50px)] md:w-[382px] h-[2px] bg-grey-900 mt-[20px]" />
         </div>
         <div className="flex flex-col w-full max-w-[calc(100%-50px)] md:w-[382px] mt-[20px]">
+          <Label htmlFor="Name" className="text-grey-600 font-semibold text-sm">
+            Name
+          </Label>
+          <Input
+            type="Name"
+            id="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+            className="mt-[10px] border-grey-800 border-2"
+          />
           <Label
             htmlFor="email"
-            className="text-grey-600 font-semibold text-sm"
+            className="text-grey-600 font-semibold text-sm mt-[15px]"
           >
             Email
           </Label>
@@ -116,6 +130,30 @@ export default function Login() {
               {show ? <FaRegEyeSlash size={18} /> : <IoEyeSharp size={18} />}
             </button>
           </div>
+          
+          <span className="text-sm text-neutral-400 mt-[20px]">
+            <Checkbox className="mr-[5px] border-grey-800 border-2 text-white font-bold text-sm"
+            onClick={() => {
+              if (agree) {
+                setAgree(false);
+              } else {
+                setAgree(true);
+              }}
+            }/> I agree to the{""}
+            <Link
+              href=""
+              className="text-primary text-sm hover:underline ml-[5px] mr-[5px] font-semibold"
+            >
+              Term of Service
+            </Link>
+            and {""}
+            <Link
+              href=""
+              className="text-primary text-sm hover:underline ml-[5px] font-semibold"
+            >
+              Privacy Policy
+            </Link>
+          </span>
           <Button
             className="w-full mt-[30px] h-[48px] bg-primary text-white font-semibold text-sm hover:bg-primary/90"
             type="submit"
@@ -123,21 +161,15 @@ export default function Login() {
           >
             Continue
           </Button>
-          <span className="text-sm text-neutral-400 mt-[20px]">
-            Don't have an account?
+           <span className="text-sm text-neutral-400 mt-[20px]">
+            already have an account?
             <Link
-              href="/signup"
+              href="/login"
               className="text-primary text-sm hover:underline ml-[5px] font-semibold"
             >
-              Sign up
+              login
             </Link>
           </span>
-          <Link
-            href="/forgot-password"
-            className="text-primary text-sm hover:underline font-semibold mt-[10px]"
-          >
-            Forgot Password
-          </Link>
         </div>
       </div>
       {errorMsg && (
