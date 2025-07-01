@@ -9,45 +9,74 @@ import Link from "next/link";
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const Router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    if (typeof window !== "undefined") {
+      localStorage.clear();
+      setIsLoggedIn(false);
+      window.location.reload();
+    }
+  };
 
   return (
     <>
-        <header className="mx-6 lg:mx-32 mt-6">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <div className="flex items-center">
-              <img src="Logo.png" className="h-10 w-auto object-contain" />
+      <header className="mx-6 lg:mx-32 mt-6">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center">
+            <img src="Logo.png" className="h-10 w-auto object-contain" />
+          </div>
+
+          {/* Navigation + Actions */}
+          <div className="flex items-center gap-5">
+            {/* Menu - hidden on mobile */}
+            <div className="hidden sm:flex gap-5 items-center">
+              <span className="lg:text-lg text-sm">Residential</span>
+              <span className="lg:text-lg text-sm">Office</span>
+              <span className="lg:text-lg text-sm">Commercial</span>
+              <span className="lg:text-lg text-sm">FAQ's</span>
             </div>
 
-            {/* Navigation + Actions */}
-            <div className="flex items-center gap-5">
-              {/* Menu - hidden on mobile */}
-              <div className="hidden sm:flex gap-5 items-center">
-                <span className="lg:text-lg text-sm">Residential</span>
-                <span className="lg:text-lg text-sm">Office</span>
-                <span className="lg:text-lg text-sm">Commercial</span>
-                <span className="lg:text-lg text-sm">FAQ's</span>
-              </div>
-
-              {/* Login Button */}
-             <Link href="/login">
+            {/* Login Button */}
+            {isLoggedIn ? (
               <Button
-              
                 variant="outline"
+                onClick={handleLogout}
                 className="border-2 bg-white text-primary hover:text-primaryLight h-10"
               >
-                Login
-              </Button></Link>
+                Logout
+              </Button>
+            ) : (
+              <Link href="/login">
+                <Button
+                  variant="outline"
+                  className="border-2 bg-white text-primary hover:text-primaryLight h-10"
+                >
+                  Login
+                </Button>
+              </Link>
+            )}
 
-              {/* Mobile Menu Icon */}
-              <FiAlignJustify
-                size={30}
-                className="sm:hidden"
-                onClick={() => setIsOpen(true)}
-              />
-            </div>
+            {/* Mobile Menu Icon */}
+            <FiAlignJustify
+              size={30}
+              className="sm:hidden"
+              onClick={() => setIsOpen(true)}
+            />
           </div>
-        </header>
+        </div>
+      </header>
 
       {/* Fullscreen Overlay Menu */}
       {isOpen && (
@@ -77,15 +106,26 @@ export default function Header() {
 
           {/* Bottom Login Button */}
           <div className="p-6">
-            <Button
-            onClick={()=> {
-              Router.push("/login");
-            }}
+            {isLoggedIn ? (
+              <Button
+              onClick={handleLogout}
+              variant="secondary"
+              className="w-full bg-primary text-white hover:text-primaryLight h-10"
+            >
+              Logout
+            </Button>
+            ) : (
+              <Button
+              onClick={() => {
+                Router.push("/login");
+              }}
               variant="secondary"
               className="w-full bg-primary text-white hover:text-primaryLight h-10"
             >
               Login
             </Button>
+            )}
+           
           </div>
         </div>
       )}

@@ -4,8 +4,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import ArticleCard from "@/components/articleCard";
 
@@ -23,9 +21,9 @@ export default function MobileSection() {
         <Button onClick={()=>{
           const token = localStorage.getItem("token");
           if (!token) {
-            Router.push("/appointment");
-          } else {
             Router.push("/login");
+          } else {
+            Router.push("/appointment");
           }
         }}  className="text-white w-full">Booking from $80</Button>
       </div>

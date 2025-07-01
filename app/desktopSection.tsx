@@ -35,7 +35,7 @@ export default function DesktopHeroSection() {
             {/* BEDROOM */}
             <div>
               <Select value={bedroom} onValueChange={setBedroom}>
-                <SelectTrigger className="!h-[50px] rounded-l-xl rounded-r-none w-[180px] border-grey-900 hover:border-primary outline-0 border-2">
+                <SelectTrigger className="!h-[50px] rounded-l-xl rounded-r-none w-[180px] border-grey-900 bg-white hover:border-primary outline-0 border-2">
                   <span
                     className={`font-semibold flex items-center gap-2 ${
                       bedroom ? "text-neutral-500" : "text-neutral-500 italic"
@@ -44,22 +44,22 @@ export default function DesktopHeroSection() {
                     {bedroom || "Bedroom"}
                   </span>
                 </SelectTrigger>
-                <SelectContent className="border-white">
+                <SelectContent className="border-white bg-white">
                   <SelectItem
                     value="1"
-                    className="text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
+                    className=" text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
                   >
                     1
                   </SelectItem>
                   <SelectItem
                     value="2"
-                    className="text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
+                    className=" text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
                   >
                     2
                   </SelectItem>
                   <SelectItem
                     value="3"
-                    className="text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
+                    className=" text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
                   >
                     3
                   </SelectItem>
@@ -69,8 +69,8 @@ export default function DesktopHeroSection() {
 
             {/* BATHROOM */}
             <div>
-              <Select value={bathroom} onValueChange={setBathroom}>
-                <SelectTrigger className="!h-[50px] px-2 w-[180px] rounded-none border-grey-900 hover:border-primary hover:border-l-2 outline-0 border-2 border-l-0">
+              <Select value={bathroom} onValueChange={setBathroom} >
+                <SelectTrigger className="!h-[50px] px-2 w-[180px] rounded-none border-grey-900 bg-white hover:border-primary hover:border-l-2 outline-0 border-2 border-l-0">
                   <span
                     className={`font-semibold flex items-center gap-2 ${
                       bathroom ? "text-neutral-500" : "text-neutral-500 italic"
@@ -79,10 +79,10 @@ export default function DesktopHeroSection() {
                     {bathroom || "Bathroom"}
                   </span>
                 </SelectTrigger>
-                <SelectContent className="border-white">
+                <SelectContent className="border-white bg-white">
                   <SelectItem
                     value="1"
-                    className="text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
+                    className="text-neutral-500 font-semibold bg-white hover:bg-grey-900 hover:text-primary transition-colors"
                   >
                     1
                   </SelectItem>
@@ -105,7 +105,7 @@ export default function DesktopHeroSection() {
             {/* CLEAN TYPE */}
             <div>
               <Select value={cleanType} onValueChange={setCleanType}>
-                <SelectTrigger className="!h-[50px] w-[180px] rounded-none border-grey-900 hover:border-primary hover:border-l-2 outline-0 border-2 border-l-0">
+                <SelectTrigger className="!h-[50px] w-[180px] rounded-none border-grey-900 bg-white hover:border-primary hover:border-l-2 outline-0 border-2 border-l-0">
                   <span
                     className={`font-semibold flex items-center gap-2 ${
                       cleanType ? "text-neutral-500" : "text-neutral-500 italic"
@@ -114,7 +114,7 @@ export default function DesktopHeroSection() {
                     {cleanType || "Clean Type"}
                   </span>
                 </SelectTrigger>
-                <SelectContent className="border-white">
+                <SelectContent className="border-white bg-white">
                   <SelectItem
                     value="standard"
                     className="text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
