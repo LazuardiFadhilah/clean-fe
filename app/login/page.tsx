@@ -61,20 +61,7 @@ export default function Login() {
           Login
         </h1>
         <div className="flex flex-col items-center w-full">
-          <Button
-            variant="outline"
-            className="hover:border-primary max-w-[calc(100%-50px)] w-full mt-[35px] md:w-[382px] border-grey-800 border-2 text-neutral-100 font-semibold text-sm"
-          >
-            <img src="./google.png" className="w-[18px] h-[18px]" alt="" />{" "}
-            Continue with Google
-          </Button>
-          <Button
-            variant="outline"
-            className="hover:border-primary max-w-[calc(100%-50px)] w-full mt-[20px] md:w-[382px] border-grey-800 border-2 text-neutral-100 font-semibold text-sm"
-          >
-            <img src="./apple.png" className="w-[18px] h-[18px]" alt="" /> Sign
-            up with Apple
-          </Button>
+         
           <div className="w-full max-w-[calc(100%-50px)] md:w-[382px] h-[2px] bg-grey-900 mt-[20px]" />
         </div>
         <div className="flex flex-col w-full max-w-[calc(100%-50px)] md:w-[382px] mt-[20px]">

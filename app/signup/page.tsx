@@ -10,32 +10,43 @@ import { Label } from "@/components/ui/label";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";
 
-import { LoginUser } from "@/lib/api/user";
+import { RegisterUser } from "@/lib/api/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Login() {
   const router = useRouter();
   const [show, setShow] = useState(false);
-  const [name, setName] = useState("");
+  const [fullname, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [agree, setAgree] = useState(false);
 
   const onSubmit = async () => {
-    if (!email || !password) {
-      setErrorMsg("Email and password are required");
+    if (!agree) {
+      setErrorMsg("You must agree to the terms and conditions");
       return;
     }
+    if (!email || !password || !fullname) {
+      setErrorMsg("All fields are required");
+      return;
+    }
+
     try {
       setErrorMsg("");
-      const user = await LoginUser({ email, password });
+      const user = await RegisterUser({ fullname, email, password });
 
-      console.log("Login successful:", user);
+      console.log("Register successful:", user);
       router.push("/"); // Redirect ke halaman utama setelah login
-    } catch (error) {
-      setErrorMsg("email atau password salah");
+    } catch (error: any) {
+      if ((error.message = "E11000")) {
+        setErrorMsg("Email already exists. Please use a different email.");
+        return;
+      }
+      const errorMessage =
+        error instanceof Error ? error.message : "Something went wrong";
+      setErrorMsg(`Error : ${errorMessage}`);
     }
   };
 
@@ -61,23 +72,9 @@ export default function Login() {
           </Link>
         </div>
         <h1 className="text-center text-2xl md:text-4xl font-bold text-neutral-100 mt-[72px]">
-          Login
+          Sign Up
         </h1>
         <div className="flex flex-col items-center w-full">
-          <Button
-            variant="outline"
-            className="hover:border-primary max-w-[calc(100%-50px)] w-full mt-[35px] md:w-[382px] border-grey-800 border-2 text-neutral-100 font-semibold text-sm"
-          >
-            <img src="./google.png" className="w-[18px] h-[18px]" alt="" />{" "}
-            Continue with Google
-          </Button>
-          <Button
-            variant="outline"
-            className="hover:border-primary max-w-[calc(100%-50px)] w-full mt-[20px] md:w-[382px] border-grey-800 border-2 text-neutral-100 font-semibold text-sm"
-          >
-            <img src="./apple.png" className="w-[18px] h-[18px]" alt="" /> Sign
-            up with Apple
-          </Button>
           <div className="w-full max-w-[calc(100%-50px)] md:w-[382px] h-[2px] bg-grey-900 mt-[20px]" />
         </div>
         <div className="flex flex-col w-full max-w-[calc(100%-50px)] md:w-[382px] mt-[20px]">
@@ -87,7 +84,7 @@ export default function Login() {
           <Input
             type="Name"
             id="Name"
-            value={name}
+            value={fullname}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
             className="mt-[10px] border-grey-800 border-2"
@@ -130,16 +127,21 @@ export default function Login() {
               {show ? <FaRegEyeSlash size={18} /> : <IoEyeSharp size={18} />}
             </button>
           </div>
-          
+
           <span className="text-sm text-neutral-400 mt-[20px]">
-            <Checkbox className="mr-[5px] border-grey-800 border-2 text-white font-bold text-sm"
-            onClick={() => {
-              if (agree) {
-                setAgree(false);
-              } else {
-                setAgree(true);
+            <Checkbox
+              className="mr-[5px] border-grey-800 border-2 text-white font-bold text-sm"
+              onClick={() => {
+                if (agree) {
+                  setAgree(false);
+                  console.log(agree);
+                } else {
+                  setAgree(true);
+                  console.log(agree);
+                }
               }}
-            }/> I agree to the{""}
+            />{" "}
+            I agree to the{""}
             <Link
               href=""
               className="text-primary text-sm hover:underline ml-[5px] mr-[5px] font-semibold"
@@ -161,7 +163,7 @@ export default function Login() {
           >
             Continue
           </Button>
-           <span className="text-sm text-neutral-400 mt-[20px]">
+          <span className="text-sm text-neutral-400 mt-[20px]">
             already have an account?
             <Link
               href="/login"
@@ -177,7 +179,7 @@ export default function Login() {
           variant="destructive"
           className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-fit max-w-[90%] min-w-[300px] border-grey-800 bg-white shadow-lg text-red-400 font-semibold text-sm"
         >
-          <AlertTitle>Cannot Login!</AlertTitle>
+          <AlertTitle>Register Failed!</AlertTitle>
           <AlertDescription>{errorMsg}</AlertDescription>
         </Alert>
       )}
