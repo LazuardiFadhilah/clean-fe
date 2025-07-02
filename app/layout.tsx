@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import Header from "@/components/ui/header";
 import "./globals.css";
+import { ReduxProvider } from "./ReduxProvider";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -17,12 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    
     <html lang="en">
       <body
         className={`${montserrat.className} bg-white text-black w-full min-h-screen`}
-        >
-        {children}
+      >
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );

@@ -12,11 +12,15 @@ import ArticleCard from "@/components/articleCard";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { useDispatch } from "react-redux";
+import { setBookingData } from "@/lib/bookingSlice";
+
 export default function DesktopHeroSection() {
   const Router = useRouter();
   const [bedroom, setBedroom] = useState("");
   const [bathroom, setBathroom] = useState("");
   const [cleanType, setCleanType] = useState("");
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -69,7 +73,7 @@ export default function DesktopHeroSection() {
 
             {/* BATHROOM */}
             <div>
-              <Select value={bathroom} onValueChange={setBathroom} >
+              <Select value={bathroom} onValueChange={setBathroom}>
                 <SelectTrigger className="!h-[50px] px-2 w-[180px] rounded-none border-grey-900 bg-white hover:border-primary hover:border-l-2 outline-0 border-2 border-l-0">
                   <span
                     className={`font-semibold flex items-center gap-2 ${
@@ -116,28 +120,28 @@ export default function DesktopHeroSection() {
                 </SelectTrigger>
                 <SelectContent className="border-white bg-white">
                   <SelectItem
-                    value="standard"
+                    value="Standard"
                     className="text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
                   >
                     Standard
                   </SelectItem>
                   <SelectItem
-                    value="deep"
+                    value="Deep Clean"
                     className="text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
                   >
-                    Deep
+                    Deep Clean
                   </SelectItem>
                   <SelectItem
-                    value="moving"
+                    value="Moving In/Out"
                     className="text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
                   >
-                    Moving
+                    Moving In/Out
                   </SelectItem>
                   <SelectItem
-                    value="post-construction"
+                    value="Post Construction"
                     className="text-neutral-500 font-semibold hover:bg-grey-900 hover:text-primary transition-colors"
                   >
-                    Post-Construction
+                    Post Construction
                   </SelectItem>
                 </SelectContent>
               </Select>
@@ -148,6 +152,7 @@ export default function DesktopHeroSection() {
                 if (!token) {
                   Router.push("/login");
                 } else {
+                  dispatch(setBookingData({ bedroom, bathroom, cleanType }));
                   Router.push("/booking");
                 }
               }}

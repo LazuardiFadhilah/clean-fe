@@ -4,12 +4,16 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+import { setBookingData } from "@/lib/bookingSlice";
 
 export default function Booking() {
+    const dispatch = useDispatch()
+     const { bedroom, bathroom, cleanType } = useSelector(
+    (state: RootState) => state.booking
+  );
   const router = useRouter();
-  const [bedrooms, setBedrooms] = useState("Studio");
-  const [bathroom, setBathroom] = useState("1");
-  const [cleanType, setCleanType] = useState("Standard");
   const options = ["Studio", "1", "2", "3", "4", "5"];
   const optBathroom = ["1", "2", "3", "4", "5"];
 
@@ -33,7 +37,7 @@ export default function Booking() {
     "Post Construction": "4.5–5 hours",
   };
 
-  const bedroomPrice = (bedrooms === "Studio" ? 1 : Number(bedrooms)) * 20;
+  const bedroomPrice = (bedroom === "Studio" ? 1 : Number(bedroom)) * 20;
   const bathroomPrice = Number(bathroom) * 10;
   let cleanTypePrice = 0;
   if (cleanType === "Standard") {
@@ -72,10 +76,10 @@ export default function Booking() {
             {options.map((item) => (
               <Button
                 key={item}
-                onClick={() => setBedrooms(item)}
+                onClick={() => dispatch(setBookingData({bedroom:item, bathroom, cleanType}))}
                 className={`bg-white border-2 font-semibol text-[16px]
                  ${
-                   bedrooms === item
+                   bedroom === item
                      ? "border-primary text-primary"
                      : "border-grey-800 text-neutral-300"
                  }`}
@@ -93,7 +97,9 @@ export default function Booking() {
             {optBathroom.map((item) => (
               <Button
                 key={item}
-                onClick={() => setBathroom(item)}
+               onClick={() =>
+  dispatch(setBookingData({ bedroom, bathroom: item, cleanType }))
+}
                 className={`bg-white border-2 font-semibol text-[16px]
                  ${
                    bathroom === item
@@ -114,7 +120,9 @@ export default function Booking() {
             {optCleanType.map((item) => (
               <div className="flex flex-col" key={item}>
                 <Button
-                  onClick={() => setCleanType(item)}
+                 onClick={() =>
+  dispatch(setBookingData({ bedroom, bathroom, cleanType: item }))
+}
                   className={`bg-white border-2 font-semibol text-[16px]
                  ${
                    cleanType === item
@@ -132,7 +140,7 @@ export default function Booking() {
           </div>
         </div>
       </div>
-      <footer className="fixed bottom-0 left-0 w-full z-10">
+      <footer className="fixed bottom-0 left-0 w-full z-10 md:hidden">
         <div className="flex flex-row">
           <div className="flex flex-col w-[60%] bg-neutral-200 py-[8px] px-[20px]">
             <span className="text-grey-700 font-semibold text-[14px]">
