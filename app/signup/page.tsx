@@ -14,7 +14,7 @@ import { RegisterUser } from "@/lib/api/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export default function Login() {
+export default function signup() {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [fullname, setName] = useState("");

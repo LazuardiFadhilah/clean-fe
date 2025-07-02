@@ -23,7 +23,7 @@ export default function MobileSection() {
           if (!token) {
             Router.push("/login");
           } else {
-            Router.push("/appointment");
+            Router.push("/booking");
           }
         }}  className="text-white w-full">Booking from $80</Button>
       </div>
