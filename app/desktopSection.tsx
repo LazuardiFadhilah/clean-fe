@@ -156,11 +156,9 @@ export default function DesktopHeroSection() {
                     bedroom: bedroom || "studio",
                     bathroom: bathroom || "1",
                     cleanType: cleanType || "Standard",
-                   
                   };
-                   dispatch(calculateSubTotal());
+                  dispatch(calculateSubTotal());
                   dispatch(setBookingData(bookingData));
-                 
 
                   Router.push("/booking");
                 }
