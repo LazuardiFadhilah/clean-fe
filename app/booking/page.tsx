@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import { setBookingData } from "@/lib/bookingSlice";
+import { calculateSubTotal, setBookingData } from "@/lib/bookingSlice";
 import { LuBedSingle } from "react-icons/lu";
 import { LuShowerHead } from "react-icons/lu";
 import { LuCalendar } from "react-icons/lu";
@@ -15,7 +15,7 @@ import { LuMapPin } from "react-icons/lu";
 
 export default function Booking() {
   const dispatch = useDispatch();
-  const { bedroom, bathroom, cleanType } = useSelector(
+  const { bedroom, bathroom, cleanType, subTotal } = useSelector(
     (state: RootState) => state.booking
   );
   const router = useRouter();
@@ -42,24 +42,9 @@ export default function Booking() {
     "Post Construction": "4.5–5 hours",
   };
 
-  const bedroomPrice = (bedroom === "Studio" ? 1 : Number(bedroom)) * 20;
-  const bathroomPrice = Number(bathroom) * 10;
-  let cleanTypePrice = 0;
-  if (cleanType === "Standard") {
-    cleanTypePrice = 50;
-  }
-  if (cleanType === "Deep Clean") {
-    cleanTypePrice = 70;
-  }
-  if (cleanType === "Moving In/Out") {
-    cleanTypePrice = 90;
-  }
-  if (cleanType === "Post Construction") {
-    cleanTypePrice = 100;
-  }
-  const subTotal = bedroomPrice + bathroomPrice + cleanTypePrice;
 useEffect(()=>{
       dispatch(setBookingData({bedroom, bathroom, cleanType, subTotal:subTotal}));
+      dispatch(calculateSubTotal());
 },[bedroom, bathroom, cleanType, subTotal, dispatch])
 
   return (

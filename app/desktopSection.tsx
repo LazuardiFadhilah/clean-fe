@@ -13,14 +13,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { useDispatch } from "react-redux";
-import { setBookingData } from "@/lib/bookingSlice";
+import { setBookingData, calculateSubTotal } from "@/lib/bookingSlice";
 
 export default function DesktopHeroSection() {
   const Router = useRouter();
   const [bedroom, setBedroom] = useState("");
   const [bathroom, setBathroom] = useState("");
   const [cleanType, setCleanType] = useState("");
-  const subTotal = 0;
   const dispatch = useDispatch();
 
   return (
@@ -153,7 +152,16 @@ export default function DesktopHeroSection() {
                 if (!token) {
                   Router.push("/login");
                 } else {
-                  dispatch(setBookingData({ bedroom, bathroom, cleanType, subTotal }));
+                  const bookingData = {
+                    bedroom: bedroom || "studio",
+                    bathroom: bathroom || "1",
+                    cleanType: cleanType || "Standard",
+                   
+                  };
+                   dispatch(calculateSubTotal());
+                  dispatch(setBookingData(bookingData));
+                 
+
                   Router.push("/booking");
                 }
               }}
