@@ -3,12 +3,14 @@ interface BookingState {
   bedroom: string;
   bathroom: string;
   cleanType: string;
+  subTotal: number;
 }
 
 const initialState: BookingState = {
   bedroom: "Studio",
   bathroom: "1",
   cleanType: "Standard",
+  subTotal:0,
 };
 
 export const bookingSlice = createSlice({

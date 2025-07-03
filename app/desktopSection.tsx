@@ -20,6 +20,7 @@ export default function DesktopHeroSection() {
   const [bedroom, setBedroom] = useState("");
   const [bathroom, setBathroom] = useState("");
   const [cleanType, setCleanType] = useState("");
+  const subTotal = 0;
   const dispatch = useDispatch();
 
   return (
@@ -152,7 +153,7 @@ export default function DesktopHeroSection() {
                 if (!token) {
                   Router.push("/login");
                 } else {
-                  dispatch(setBookingData({ bedroom, bathroom, cleanType }));
+                  dispatch(setBookingData({ bedroom, bathroom, cleanType, subTotal }));
                   Router.push("/booking");
                 }
               }}
