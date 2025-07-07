@@ -42,10 +42,12 @@ export default function Booking() {
     "Post Construction": "4.5–5 hours",
   };
 
-useEffect(()=>{
-      dispatch(setBookingData({bedroom, bathroom, cleanType, subTotal:subTotal}));
-      dispatch(calculateSubTotal());
-},[bedroom, bathroom, cleanType, subTotal, dispatch])
+  useEffect(() => {
+    dispatch(
+      setBookingData({ bedroom, bathroom, cleanType, subTotal: subTotal })
+    );
+    dispatch(calculateSubTotal());
+  }, [bedroom, bathroom, cleanType, subTotal, dispatch]);
 
   return (
     <>
@@ -72,7 +74,12 @@ useEffect(()=>{
                 key={item}
                 onClick={() =>
                   dispatch(
-                    setBookingData({ bedroom: item, bathroom, cleanType, subTotal })
+                    setBookingData({
+                      bedroom: item,
+                      bathroom,
+                      cleanType,
+                      subTotal,
+                    })
                   )
                 }
                 className={`bg-white border-2 font-semibol text-[16px]
@@ -97,7 +104,12 @@ useEffect(()=>{
                 key={item}
                 onClick={() =>
                   dispatch(
-                    setBookingData({ bedroom, bathroom: item, cleanType, subTotal })
+                    setBookingData({
+                      bedroom,
+                      bathroom: item,
+                      cleanType,
+                      subTotal,
+                    })
                   )
                 }
                 className={`bg-white border-2 font-semibol text-[16px]
@@ -122,7 +134,12 @@ useEffect(()=>{
                 <Button
                   onClick={() =>
                     dispatch(
-                      setBookingData({ bedroom, bathroom, cleanType: item, subTotal })
+                      setBookingData({
+                        bedroom,
+                        bathroom,
+                        cleanType: item,
+                        subTotal,
+                      })
                     )
                   }
                   className={`bg-white border-2 font-semibol text-[16px]
@@ -160,9 +177,12 @@ useEffect(()=>{
 
       <div className="hidden md:flex fixed top-0 left-0 w-full h-[70px] bg-white shadow-md z-10 items-center">
         <div className="w-[60px] h-full flex items-center justify-center border-r-2 border-grey-600">
-          <FiX className="text-neutral-300 w-6 h-6" onClick={()=>{
-            router.push("/");
-          }}/>
+          <FiX
+            className="text-neutral-300 w-6 h-6"
+            onClick={() => {
+              router.push("/");
+            }}
+          />
         </div>
         <div className="flex flex-1 justify-between items-center mx-6">
           <div className="flex flex-row items-center">
@@ -171,9 +191,7 @@ useEffect(()=>{
               <h1 className="text-neutral-100 font-semibold text-md">
                 {bedroom}
               </h1>
-              <h1 className="text-grey-600 font-semibold text-xs">
-                BEDROOMS
-              </h1>
+              <h1 className="text-grey-600 font-semibold text-xs">BEDROOMS</h1>
             </div>
           </div>
           <div className="flex flex-row items-center">
@@ -182,9 +200,7 @@ useEffect(()=>{
               <h1 className="text-neutral-100 font-semibold text-md">
                 {bathroom}
               </h1>
-              <h1 className="text-grey-600 font-semibold text-xs">
-                BATHROOMS
-              </h1>
+              <h1 className="text-grey-600 font-semibold text-xs">BATHROOMS</h1>
             </div>
           </div>
           <div className="flex flex-row items-center">
@@ -204,9 +220,7 @@ useEffect(()=>{
               <h1 className="text-neutral-100 font-semibold text-md">
                 Schedule
               </h1>
-              <h1 className="text-grey-600 font-semibold text-xs">
-                DATE
-              </h1>
+              <h1 className="text-grey-600 font-semibold text-xs">DATE</h1>
             </div>
           </div>
           <div className="flex flex-row items-center">
@@ -215,19 +229,124 @@ useEffect(()=>{
               <h1 className="text-neutral-100 font-semibold text-md">
                 Address
               </h1>
-              <h1 className="text-grey-600 font-semibold text-xs">
-                LOCATION
-              </h1>
+              <h1 className="text-grey-600 font-semibold text-xs">LOCATION</h1>
             </div>
           </div>
         </div>
         <div className="h-full min-w-[120px] bg-neutral-200 flex flex-col items-center justify-center px-4">
-            <span className="text-white font-bold text-lg">
-              $ {subTotal}
-            </span>
-            <span className="text-grey-600 text-xs font-semibold">
-              SUB TOTAL
-            </span>
+          <span className="text-white font-bold text-lg">$ {subTotal}</span>
+          <span className="text-grey-600 text-xs font-semibold">SUB TOTAL</span>
+        </div>
+      </div>
+
+      <div className="hidden flex-col md:flex pt-[100px] w-[calc(100%-50px)] mx-auto bg-white">
+        <div className="flex w-full items-center justify-center">
+          <h1 className="text-neutral-100 font-bold text-3xl">
+            Customize Your Requirements
+          </h1>
+        </div>
+
+        <div className="flex w-full items-center justify-center mt-3">
+          <h1 className="text-grey-600 font-semibold text-[14px]">
+            NUMBER OF BEDROOMS
+          </h1>
+        </div>
+        <div className="flex items-center justify-center flex-row flex-wrap gap-2 mt-[13px]">
+          {options.map((item) => (
+            <Button
+              key={item}
+              onClick={() =>
+                dispatch(
+                  setBookingData({
+                    bedroom: item,
+                    bathroom,
+                    cleanType,
+                    subTotal,
+                  })
+                )
+              }
+              className={`bg-white border-2 font-semibol text-[16px]
+                 ${
+                   bedroom === item
+                     ? "border-primary text-primary"
+                     : "border-grey-800 text-neutral-300"
+                 }`}
+            >
+              {item}
+            </Button>
+          ))}
+        </div>
+         <div className="flex w-full items-center justify-center mt-10">
+          <h1 className="text-grey-600 font-semibold text-[14px]">
+            NUMBER OF BATHROOMS
+          </h1>
+        </div>
+        <div className="flex items-center justify-center flex-row flex-wrap gap-2 mt-[13px]">
+          {optBathroom.map((item) => (
+            <Button
+              key={item}
+              onClick={() =>
+                dispatch(
+                  setBookingData({
+                    bedroom,
+                    bathroom :item,
+                    cleanType,
+                    subTotal,
+                  })
+                )
+              }
+              className={`bg-white border-2 font-semibol text-[16px]
+                 ${
+                   bathroom === item
+                     ? "border-primary text-primary"
+                     : "border-grey-800 text-neutral-300"
+                 }`}
+            >
+              {item}
+            </Button>
+          ))}
+        </div>
+        <div className="flex w-full items-center justify-center mt-10">
+          <h1 className="text-grey-600 font-semibold text-[14px]">
+            CLEAN TYPE
+          </h1>
+        </div>
+         <div className="flex flex-row flex-wrap gap-3 mt-[13px] items-center justify-center">
+            {optCleanType.map((item) => (
+              <div className="flex flex-col" key={item}>
+                <Button
+                  onClick={() =>
+                    dispatch(
+                      setBookingData({
+                        bedroom,
+                        bathroom,
+                        cleanType: item,
+                        subTotal,
+                      })
+                    )
+                  }
+                  className={`bg-white border-2 font-semibol text-[16px]
+                 ${
+                   cleanType === item
+                     ? "border-primary text-primary"
+                     : "border-grey-800 text-neutral-300"
+                 }`}
+                >
+                  {item}
+                </Button>
+                <span className="mt-[8px] text-neutral-500 font-light text-[12px] flex items-center justify-center">
+                  {durationClean[item]}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-center mt-13">
+            <Button className="py-5 px-15 text-white font-semibold text-[18px]"
+            onClick={()=>{
+                router.push("/booking/step_2")
+            }}>
+                Next
+            </Button>
           </div>
       </div>
     </>
