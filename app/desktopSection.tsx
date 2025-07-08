@@ -153,7 +153,7 @@ export default function DesktopHeroSection() {
                   Router.push("/login");
                 } else {
                   const bookingData = {
-                    bedroom: bedroom || "studio",
+                    bedroom: bedroom || "Studio",
                     bathroom: bathroom || "1",
                     cleanType: cleanType || "Standard",
                   };
