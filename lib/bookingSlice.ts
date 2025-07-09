@@ -4,6 +4,7 @@ interface BookingState {
   bathroom: string;
   cleanType: string;
   subTotal: number;
+  date: string | null;
 }
 
 const initialState: BookingState = {
@@ -11,6 +12,7 @@ const initialState: BookingState = {
   bathroom: "1",
   cleanType: "Standard",
   subTotal:0,
+  date: null,
 };
 
 export const bookingSlice = createSlice({
@@ -45,7 +47,7 @@ export const bookingSlice = createSlice({
 
       state.subTotal = bedroomPrice + bathroomPrice + cleanTypePrice;
     },
-    clearBookingData: () => initialState,
+    clearBookingData: () => ({...initialState}),
   },
 });
 

@@ -21,21 +21,10 @@ import { cn } from "@/lib/utils";
 // Komponen utama untuk halaman Booking Step 2
 export default function Booking() {
   const dispatch = useDispatch();
-  const { bedroom, bathroom, cleanType, subTotal } = useSelector(
+  const { bedroom, bathroom, cleanType, subTotal, date } = useSelector(
     (state: RootState) => state.booking
   );
   const router = useRouter();
-
-  // State lokal untuk menyimpan tanggal yang dipilih
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
-
-  // Set data booking ke Redux dan hitung subtotal ketika bedroom, bathroom, cleanType atau subtotal berubah
-  useEffect(() => {
-    dispatch(
-      setBookingData({ bedroom, bathroom, cleanType, subTotal: subTotal })
-    );
-    dispatch(calculateSubTotal());
-  }, [bedroom, bathroom, cleanType, subTotal, dispatch]);
 
   return (
     <>
@@ -58,18 +47,23 @@ export default function Booking() {
             Book a specific date you need your space sparkled
           </span>
         </div>
-       
-          {/* Komponen Calendar untuk memilih tanggal booking */}
-          <Calendar
+
+        {/* Komponen Calendar untuk memilih tanggal booking */}
+        <Calendar
           mode="single"
-          selected={date}
-          onSelect={setDate}
+          selected={
+            date ? new Date(date) : undefined // Pastikan date tidak null
+          }
+          onSelect={(selectedDate) => {
+            if (selectedDate) {
+              dispatch(setBookingData({ date: selectedDate.toISOString() }));
+            }
+          }}
           disabled={{ before: new Date() }}
           className={cn(
-            " mt-5 text-neutral-700 grid place-items-center w-full max-w-4xl",
+            " mt-5 text-neutral-700 grid place-items-center w-full max-w-4xl"
           )}
         />
-
       </div>
 
       {/* Footer untuk menampilkan subtotal dan tombol NEXT di mobile */}
@@ -134,11 +128,13 @@ export default function Booking() {
             <LuCalendar className="text-neutral-500" size={20} />
             <div className="flex flex-col pl-2">
               <h1 className="text-neutral-100 font-semibold text-md">
-                {date ? date?.toLocaleString("en-US", {
-                 weekday: "short",
-                  month: "short",
-                  day: "numeric",
-                }) : "Select Date"}
+                {date
+                  ? new Date(date).toLocaleString("en-US", {
+                      weekday: "short",
+                      month: "short",
+                      day: "numeric",
+                    })
+                  : "Select Date"}
               </h1>
               <h1 className="text-grey-600 font-semibold text-xs">DATE</h1>
             </div>
@@ -162,30 +158,33 @@ export default function Booking() {
       {/* Calendar versi desktop dengan tampilan lebih besar */}
       <div className="hidden flex-col md:flex pt-[100px] w-[calc(100%-50px)] mx-auto bg-white">
         <div className="flex w-full items-center justify-center">
-          <h1 className="text-neutral-100 font-bold text-3xl">
-            Book Date
-          </h1>
+          <h1 className="text-neutral-100 font-bold text-3xl">Book Date</h1>
         </div>
         <span className="flex items-center justify-center text-neutral-500 font-light text-lg mt-2">
           Book a specific date you need your space sparkled
         </span>
-           <div className="flex items-center justify-center mt-5 w-full">
-  <Calendar
-    mode="single"
-    selected={date}
-    onSelect={setDate}
-    disabled={{ before: new Date() }}
-    className={cn(
-      "w-full max-w-4xl", // ukuran container calendar
-      "text-neutral-700",
-      "grid place-items-center",
+        <div className="flex items-center justify-center mt-5 w-full">
+          <Calendar
+            mode="single"
+            selected={
+              date ? new Date(date) : new Date() // Pastikan date tidak null
+            }
+            onSelect={(selectedDate) => {
+              if (selectedDate) {
+                dispatch(setBookingData({ date: selectedDate.toISOString() }));
+              }
+            }}
+            disabled={{ before: new Date() }}
+            className={cn(
+              "w-full max-w-4xl", // ukuran container calendar
+              "text-neutral-700",
+              "grid place-items-center",
 
-      // custom tanggal jadi besar
-      "[&_.rdp-day]:text-lg [&_.rdp-day]:w-14 [&_.rdp-day]:h-14",
-
-     )}
-  />
-</div>
+              // custom tanggal jadi besar
+              "[&_.rdp-day]:text-lg [&_.rdp-day]:w-14 [&_.rdp-day]:h-14"
+            )}
+          />
+        </div>
 
         {/* Tombol NEXT di desktop */}
         <div className="flex items-center justify-center mt-13">
