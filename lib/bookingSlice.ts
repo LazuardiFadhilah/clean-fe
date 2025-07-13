@@ -5,6 +5,9 @@ interface BookingState {
   cleanType: string;
   subTotal: number;
   date: string | null;
+  time: string;
+  frequency: string; // Added frequency field
+  address?: string; // Optional address field
 }
 
 const initialState: BookingState = {
@@ -13,6 +16,8 @@ const initialState: BookingState = {
   cleanType: "Standard",
   subTotal:0,
   date: null,
+  time:"08:00",
+  frequency: "One-Time", // Default frequency
 };
 
 export const bookingSlice = createSlice({
