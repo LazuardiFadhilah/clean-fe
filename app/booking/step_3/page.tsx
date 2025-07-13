@@ -21,10 +21,22 @@ import { cn } from "@/lib/utils";
 // Komponen utama untuk halaman Booking Step 2
 export default function Booking() {
   const dispatch = useDispatch();
-  const { bedroom, bathroom, cleanType, subTotal, date } = useSelector(
+  const { bedroom, bathroom, cleanType, subTotal, date, time } = useSelector(
     (state: RootState) => state.booking
   );
   const router = useRouter();
+  const optTimes = [
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+  ];
 
   return (
     <>
@@ -40,30 +52,38 @@ export default function Booking() {
           />
         </div>
         <span className="text-neutral-100 text-[25px] font-bold text-left mt-[37px]">
-          Book Date
+          Book Time
         </span>
-        <div className="flex flex-col mt-[10px]">
-          <span className="text-neutral-500 font-light text-[14px] text-left">
-            Book a specific date you need your space sparkled
+        <div className="flex flex-col my-[10px]">
+          <span className="text-neutral-500 font-light text-[15px] text-left">
+            Save even more by booking off-peak dates and times.
           </span>
         </div>
 
-        {/* Komponen Calendar untuk memilih tanggal booking */}
-        <Calendar
-          mode="single"
-          selected={
-            date ? new Date(date) : undefined // Pastikan date tidak null
-          }
-          onSelect={(selectedDate) => {
-            if (selectedDate) {
-              dispatch(setBookingData({ date: selectedDate.toISOString() }));
-            }
-          }}
-          disabled={{ before: new Date() }}
-          className={cn(
-            " mt-5 text-neutral-700 grid place-items-center w-full max-w-4xl"
-          )}
-        />
+        {/* Komponen Calendar untuk memilih jam booking */}
+        {optTimes.map((optTime) => {
+                    const isSelected = time === optTime;
+          return (
+          <div
+            onClick={() => {
+              dispatch(setBookingData({ time: optTime }));
+            }}
+            key={optTime}
+            className={cn(
+              "flex items-center justify-center rounded-lg border-1 w-full h-[85px] mt-[6px]",
+              isSelected ? "border-primary" : "border-neutral-500",
+            )}
+          >
+            <h1 className={cn(
+              " font-semibold text-[15px]",
+              isSelected ? "text-primary" : "text-neutral-500"
+            )}>
+              {optTime}
+            </h1>
+          </div>
+          );
+        })}
+        <div className="mb-30" />
       </div>
 
       {/* Footer untuk menampilkan subtotal dan tombol NEXT di mobile */}
@@ -77,9 +97,7 @@ export default function Booking() {
               $ {subTotal}
             </span>
           </div>
-          <div onClick={()=>{
-            router.push("/booking/step_3");
-          }} className="bg-primary text-white font-semibold text-[18px] w-full items-center justify-center flex">
+          <div className="bg-primary text-white font-semibold text-[18px] w-full items-center justify-center flex">
             NEXT
           </div>
         </div>
@@ -160,40 +178,44 @@ export default function Booking() {
       {/* Calendar versi desktop dengan tampilan lebih besar */}
       <div className="hidden flex-col md:flex pt-[100px] w-[calc(100%-50px)] mx-auto bg-white">
         <div className="flex w-full items-center justify-center">
-          <h1 className="text-neutral-100 font-bold text-3xl">Book Date</h1>
+          <h1 className="text-neutral-100 font-bold text-3xl">Book Timing</h1>
         </div>
-        <span className="flex items-center justify-center text-neutral-500 font-light text-lg mt-2">
-          Book a specific date you need your space sparkled
+        <span className="flex items-center justify-center text-neutral-500 font-light text-[18px] mt-2 mb-[30px]">
+          Save even more by booking off-peak dates and times.
         </span>
-        <div className="flex items-center justify-center mt-5 w-full">
-          <Calendar
-            mode="single"
-            selected={
-              date ? new Date(date) : new Date() // Pastikan date tidak null
-            }
-            onSelect={(selectedDate) => {
-              if (selectedDate) {
-                dispatch(setBookingData({ date: selectedDate.toISOString() }));
-              }
+             
+         <div className="flex flex-col items-center justify-center w-full">
+                  {optTimes.map((optTime) => {
+                    const isSelected = time === optTime;
+          return (
+          <div
+            onClick={() => {
+              dispatch(setBookingData({ time: optTime }));
             }}
-            disabled={{ before: new Date() }}
+            key={optTime}
             className={cn(
-              "w-full max-w-4xl", // ukuran container calendar
-              "text-neutral-700",
-              "grid place-items-center",
-
-              // custom tanggal jadi besar
-              "[&_.rdp-day]:text-lg [&_.rdp-day]:w-14 [&_.rdp-day]:h-14"
+              "flex items-center justify-center rounded-lg border-1 w-full max-w-[400px] h-[85px] mt-[6px]",
+              isSelected ? "border-primary" : "border-neutral-500",
             )}
-          />
-        </div>
+          >
+            <h1 className={cn(
+              " font-semibold text-[15px]",
+              isSelected ? "text-primary" : "text-neutral-500"
+            )}>
+              {optTime}
+            </h1>
+          </div>
+          );
+        })}
+         </div>
+            
 
         {/* Tombol NEXT di desktop */}
-        <div className="flex items-center justify-center mt-13">
+        <div className="flex items-center justify-center my-13">
           <Button
             className="py-5 px-15 text-white font-semibold text-[18px]"
             onClick={() => {
-              router.push("/booking/step_3");
+              router.push("/booking/step_4");
             }}
           >
             Next
