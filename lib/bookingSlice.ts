@@ -8,6 +8,11 @@ interface BookingState {
   time: string;
   frequency: string; // Added frequency field
   address?: string; // Optional address field
+  entry_method?: string; // Optional entry method field
+  adds_ons?: string[]; // Optional addons field
+  has_pets?: boolean; // Optional field to indicate if the user has pets
+  pet_type?: string; // Optional field to specify the type of pet
+  notes?: string; // Optional field for additional notes
 }
 
 const initialState: BookingState = {
@@ -18,6 +23,11 @@ const initialState: BookingState = {
   date: null,
   time:"08:00",
   frequency: "One-Time", // Default frequency
+  adds_ons: [], // Initialize as empty array
+  has_pets: false, // Default value for has_pets
+  pet_type: "", // Default value for pet_type
+  notes: "", // Default value for notes
+
 };
 
 export const bookingSlice = createSlice({
