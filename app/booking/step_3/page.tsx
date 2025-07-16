@@ -97,7 +97,9 @@ export default function Booking() {
               $ {subTotal}
             </span>
           </div>
-          <div className="bg-primary text-white font-semibold text-[18px] w-full items-center justify-center flex">
+          <div onClick={()=>{
+            router.push("/booking/step_4");
+          }} className="bg-primary text-white font-semibold text-[18px] w-full items-center justify-center flex">
             NEXT
           </div>
         </div>

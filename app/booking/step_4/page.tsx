@@ -15,7 +15,11 @@ import { LiaBroomSolid } from "react-icons/lia";
 import { LuMapPin } from "react-icons/lu";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
-import { MdKitchen, MdOutlineMicrowave, MdOutlineDoorSliding } from "react-icons/md";
+import {
+  MdKitchen,
+  MdOutlineMicrowave,
+  MdOutlineDoorSliding,
+} from "react-icons/md";
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
@@ -25,29 +29,41 @@ import { Label } from "@/components/ui/label";
 // Komponen utama untuk halaman Booking Step 2
 export default function Booking() {
   const dispatch = useDispatch();
-  const { bedroom, bathroom, cleanType, subTotal, date, frequency, address, entry_method, adds_ons, has_pets, pet_type, notes } =
-    useSelector((state: RootState) => state.booking);
+  const {
+    bedroom,
+    bathroom,
+    cleanType,
+    subTotal,
+    date,
+    frequency,
+    address,
+    entry_method,
+    adds_ons,
+    has_pets,
+    pet_type,
+    notes,
+  } = useSelector((state: RootState) => state.booking);
   const router = useRouter();
   const optFrequencies = ["one-time", "weekly", "bi-weekly", "monthly"];
   const optEntryMethods = ["someone home", "doorman", "hidden key", "other"];
   const optAddOns = [
-  { key: "inside fridge", icon: <MdKitchen size={20} /> },
-  { key: "inside oven", icon: <MdOutlineMicrowave size={20} /> },
-  { key: "inside cabinets", icon: <MdOutlineDoorSliding size={20} /> },
-];
-const optHasPets = [
-  { key: "Yes", value: true },
-  { key: "No", value: false },
-];
+    { key: "inside fridge", icon: <MdKitchen size={20} /> },
+    { key: "inside oven", icon: <MdOutlineMicrowave size={20} /> },
+    { key: "inside cabinets", icon: <MdOutlineDoorSliding size={20} /> },
+  ];
+  const optHasPets = [
+    { key: "Yes", value: true },
+    { key: "No", value: false },
+  ];
 
-const toggleAddOn = (addOn: string) => {
-  const currentAddOns = adds_ons ?? [];
-const updatedAddOns = currentAddOns.includes(addOn)
-  ? currentAddOns.filter((item) => item !== addOn)
-  : [...currentAddOns, addOn];
+  const toggleAddOn = (addOn: string) => {
+    const currentAddOns = adds_ons ?? [];
+    const updatedAddOns = currentAddOns.includes(addOn)
+      ? currentAddOns.filter((item) => item !== addOn)
+      : [...currentAddOns, addOn];
 
-  dispatch(setBookingData({ adds_ons: updatedAddOns }));
-};
+    dispatch(setBookingData({ adds_ons: updatedAddOns }));
+  };
 
   return (
     <>
@@ -126,7 +142,7 @@ const updatedAddOns = currentAddOns.includes(addOn)
             }}
             className="placeholder:font-semibold placeholder:text-[14px] w-full h-fit mb-4 border-2 border-grey-800 py-[9px]"
           />
-           <Label className="text-neutral-500 font-semibold text-[14px] mb-2">
+          <Label className="text-neutral-500 font-semibold text-[14px] mb-2">
             HOW DO WE GET IN?
           </Label>
           <div className="flex flex-row flex-wrap gap-2">
@@ -156,69 +172,71 @@ const updatedAddOns = currentAddOns.includes(addOn)
             })}
           </div>
           <Label className="text-neutral-500 font-semibold text-[14px] mb-2 mt-4">
-  ADD-ONS
-</Label>
-<div className="flex flex-row flex-wrap gap-2">
-  {optAddOns.map((add) => {
-    const isSelected = (adds_ons ?? []).includes(add.key);
-    return (
-      <div
-        key={add.key}
-        onClick={() => toggleAddOn(add.key)}
-        className={cn(
-          "flex flex-row gap-2 items-center py-[11px] px-[20px] border-[2px] rounded-lg h-[50px] cursor-pointer",
-          isSelected ? "border-primary text-primary" : "border-grey-800 text-neutral-500"
-        )}
-      >
-        {add.icon}
-        <span className="font-semibold text-[14px]">{add.key}</span>
-      </div>
-    );
-  })}
-</div>
-<Label className="text-neutral-500 font-semibold text-[14px] mb-2 mt-4">
-  ANY PETS?
-</Label>
-<div className="flex flex-row flex-wrap gap-2">
-  {optHasPets.map((pets) => {
-    const isSelected = has_pets === pets.value;
-    return (
-      <div
-        key={pets.key}
-        onClick={() => {
-          dispatch(setBookingData({ has_pets: pets.value }));
-          
-        }}
-        className={cn(
-          "flex flex-row gap-2 items-center py-[11px] px-[20px] border-[2px] rounded-lg h-[50px] cursor-pointer",
-          isSelected ? "border-primary text-primary" : "border-grey-800 text-neutral-500"
-        )}
-      >
-        
-        <span className="font-semibold text-[14px]">{pets.key}</span>
-      </div>
-    );
-  })}
-  <textarea
-  placeholder="What types of pets? Some of our cleaners have pet allergies."
-  value={pet_type}
-  onChange={(e) => {
-    dispatch(setBookingData({ pet_type: e.target.value }));
-  }}
-  className="placeholder:font-light placeholder:text-[14px] flex items-center justify-center w-full min-h-[81px] border-2 border-grey-800 p-[20px] resize-none text-neutral-100 rounded-lg focus:border-primary focus:outline-none"
-/>
-<Label className="text-neutral-500 font-semibold text-[14px] mb-2 mt-2">
-  ADDITIONAL NOTES
-</Label>
- <textarea
-  placeholder="I would like Sophie to be my cleaner.  Please change my sheets (fresh bedding is on the bed) and empty the dishwasher."
-  value={notes}
-  onChange={(e) => {
-    dispatch(setBookingData({ notes: e.target.value }));
-  }}
-  className="placeholder:font-light placeholder:text-[14px] flex items-center justify-center w-full min-h-[81px] mb-4 border-2 border-grey-800 p-[20px] resize-none text-neutral-100 rounded-lg focus:border-primary focus:outline-none"
-/>
-</div>
+            ADD-ONS
+          </Label>
+          <div className="flex flex-row flex-wrap gap-2">
+            {optAddOns.map((add) => {
+              const isSelected = (adds_ons ?? []).includes(add.key);
+              return (
+                <div
+                  key={add.key}
+                  onClick={() => toggleAddOn(add.key)}
+                  className={cn(
+                    "flex flex-row gap-2 items-center py-[11px] px-[20px] border-[2px] rounded-lg h-[50px] cursor-pointer",
+                    isSelected
+                      ? "border-primary text-primary"
+                      : "border-grey-800 text-neutral-500"
+                  )}
+                >
+                  {add.icon}
+                  <span className="font-semibold text-[14px]">{add.key}</span>
+                </div>
+              );
+            })}
+          </div>
+          <Label className="text-neutral-500 font-semibold text-[14px] mb-2 mt-4">
+            ANY PETS?
+          </Label>
+          <div className="flex flex-row flex-wrap gap-2">
+            {optHasPets.map((pets) => {
+              const isSelected = has_pets === pets.value;
+              return (
+                <div
+                  key={pets.key}
+                  onClick={() => {
+                    dispatch(setBookingData({ has_pets: pets.value }));
+                  }}
+                  className={cn(
+                    "flex flex-row gap-2 items-center py-[11px] px-[20px] border-[2px] rounded-lg h-[50px] cursor-pointer",
+                    isSelected
+                      ? "border-primary text-primary"
+                      : "border-grey-800 text-neutral-500"
+                  )}
+                >
+                  <span className="font-semibold text-[14px]">{pets.key}</span>
+                </div>
+              );
+            })}
+            <textarea
+              placeholder="What types of pets? Some of our cleaners have pet allergies."
+              value={pet_type}
+              onChange={(e) => {
+                dispatch(setBookingData({ pet_type: e.target.value }));
+              }}
+              className="placeholder:font-light placeholder:text-[14px] flex items-center justify-center w-full min-h-[81px] border-2 border-grey-800 p-[20px] resize-none text-neutral-100 rounded-lg focus:border-primary focus:outline-none"
+            />
+            <Label className="text-neutral-500 font-semibold text-[14px] mb-2 mt-2">
+              ADDITIONAL NOTES
+            </Label>
+            <textarea
+              placeholder="I would like Sophie to be my cleaner.  Please change my sheets (fresh bedding is on the bed) and empty the dishwasher."
+              value={notes}
+              onChange={(e) => {
+                dispatch(setBookingData({ notes: e.target.value }));
+              }}
+              className="placeholder:font-light placeholder:text-[14px] flex items-center justify-center w-full min-h-[81px] mb-4 border-2 border-grey-800 p-[20px] resize-none text-neutral-100 rounded-lg focus:border-primary focus:outline-none"
+            />
+          </div>
         </div>
         <div className="mb-30" />
       </div>
@@ -234,7 +252,12 @@ const updatedAddOns = currentAddOns.includes(addOn)
               $ {subTotal}
             </span>
           </div>
-          <div className="bg-primary text-white font-semibold text-[18px] w-full items-center justify-center flex">
+          <div
+            onClick={() => {
+              router.push("/booking/step_5");
+            }}
+            className="bg-primary text-white font-semibold text-[18px] w-full items-center justify-center flex"
+          >
             NEXT
           </div>
         </div>
@@ -313,20 +336,172 @@ const updatedAddOns = currentAddOns.includes(addOn)
       </div>
 
       {/* Calendar versi desktop dengan tampilan lebih besar */}
-      <div className="hidden flex-col md:flex pt-[100px] w-[calc(100%-50px)] mx-auto bg-white">
+      <div className="hidden flex-col md:items-center md:justify-center md:flex pt-[100px] w-[calc(100%-50px)] mx-auto bg-white">
         <div className="flex w-full items-center justify-center">
-          <h1 className="text-neutral-100 font-bold text-3xl">Book Timing</h1>
+          <h1 className="text-neutral-100 font-bold text-3xl">
+            Select Frequency
+          </h1>
         </div>
         <span className="flex items-center justify-center text-neutral-500 font-light text-[18px] mt-2 mb-[30px]">
-          Save even more by booking off-peak dates and times.
+          Book for Shield’s recurring plan and save 20% annually.
         </span>
+        <div className="flex flex-col items-center justify-center mt-[10px]">
+          <h1 className="text-neutral-500 font-semibold text-[14px] mb-[10px]">
+            RECURRING
+          </h1>
+          <div className="flex flex-row flex-wrap gap-2">
+            {optFrequencies.map((Frq) => {
+              const isSelected = frequency === Frq;
+              return (
+                <div
+                  onClick={() => {
+                    dispatch(setBookingData({ frequency: Frq }));
+                  }}
+                  key={Frq}
+                  className={cn(
+                    " py-[11px] px-[25px] border-[2px]  rounded-lg h-[50px] flex items-center justify-center cursor-pointer",
+                    isSelected ? "border-primary" : "border-grey-800"
+                  )}
+                >
+                  <h1
+                    className={cn(
+                      "font-semibold text-[14px]",
+                      isSelected ? "text-primary" : "text-neutral-500"
+                    )}
+                  >
+                    {Frq}
+                  </h1>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <span className="text-neutral-100 text-[25px] font-bold text-left mt-[37px]">
+          Add Your Address & Detalis
+        </span>
+        <div className="flex flex-col my-[10px]">
+          <span className="text-neutral-500 font-light text-[15px] text-left">
+            Be spesific of any additional details we might need from you.
+          </span>
+        </div>
+
+        {/* Komponen Calendar untuk memilih jam booking */}
+        <div className="flex items-center justify-center flex-col mt-[10px]">
+          <Label className="text-neutral-500 font-semibold text-[14px] mb-2">
+            ADDRESS
+          </Label>
+          <Input
+            type="text"
+            placeholder="Enter a Location"
+            value={address}
+            onChange={(e) => {
+              dispatch(setBookingData({ address: e.target.value }));
+            }}
+            className=" placeholder:font-semibold placeholder:text-[14px] w-full h-fit mb-4 border-2 border-grey-800 py-[9px]"
+          />
+          <Label className="text-neutral-500 font-semibold text-[14px] mb-2">
+            HOW DO WE GET IN?
+          </Label>
+          <div className="flex flex-row flex-wrap gap-2">
+            {optEntryMethods.map((enter) => {
+              const isSelected = entry_method === enter;
+              return (
+                <div
+                  onClick={() => {
+                    dispatch(setBookingData({ entry_method: enter }));
+                  }}
+                  key={enter}
+                  className={cn(
+                    " py-[11px] px-[25px] border-[2px]  rounded-lg h-[50px] flex items-center justify-center cursor-pointer",
+                    isSelected ? "border-primary" : "border-grey-800"
+                  )}
+                >
+                  <h1
+                    className={cn(
+                      "font-semibold text-[14px]",
+                      isSelected ? "text-primary" : "text-neutral-500"
+                    )}
+                  >
+                    {enter}
+                  </h1>
+                </div>
+              );
+            })}
+          </div>
+          <Label className="text-neutral-500 font-semibold text-[14px] mb-2 mt-4">
+            ADD-ONS
+          </Label>
+          <div className="flex flex-row flex-wrap gap-2">
+            {optAddOns.map((add) => {
+              const isSelected = (adds_ons ?? []).includes(add.key);
+              return (
+                <div
+                  key={add.key}
+                  onClick={() => toggleAddOn(add.key)}
+                  className={cn(
+                    "flex flex-row gap-2 items-center py-[11px] px-[20px] border-[2px] rounded-lg h-[50px] cursor-pointer",
+                    isSelected
+                      ? "border-primary text-primary"
+                      : "border-grey-800 text-neutral-500"
+                  )}
+                >
+                  {add.icon}
+                  <span className="font-semibold text-[14px]">{add.key}</span>
+                </div>
+              );
+            })}
+          </div>
+          <Label className="text-neutral-500 font-semibold text-[14px] mb-2 mt-4">
+            ANY PETS?
+          </Label>
+          <div className="flex flex-row items-center justify-center flex-wrap gap-2">
+            {optHasPets.map((pets) => {
+              const isSelected = has_pets === pets.value;
+              return (
+                <div
+                  key={pets.key}
+                  onClick={() => {
+                    dispatch(setBookingData({ has_pets: pets.value }));
+                  }}
+                  className={cn(
+                    "flex flex-row gap-2 items-center py-[11px] px-[20px] border-[2px] rounded-lg h-[50px] cursor-pointer",
+                    isSelected
+                      ? "border-primary text-primary"
+                      : "border-grey-800 text-neutral-500"
+                  )}
+                >
+                  <span className="font-semibold text-[14px]">{pets.key}</span>
+                </div>
+              );
+            })}
+            <textarea
+              placeholder="What types of pets? Some of our cleaners have pet allergies."
+              value={pet_type}
+              onChange={(e) => {
+                dispatch(setBookingData({ pet_type: e.target.value }));
+              }}
+              className="placeholder:font-light placeholder:text-[14px] flex items-center justify-center w-full min-h-[81px] border-2 border-grey-800 p-[20px] resize-none text-neutral-100 rounded-lg focus:border-primary focus:outline-none"
+            />
+            <Label className="text-neutral-500 font-semibold text-[14px] mb-2 mt-2">
+              ADDITIONAL NOTES
+            </Label>
+            <textarea
+              placeholder="I would like Sophie to be my cleaner.  Please change my sheets (fresh bedding is on the bed) and empty the dishwasher."
+              value={notes}
+              onChange={(e) => {
+                dispatch(setBookingData({ notes: e.target.value }));
+              }}
+              className="placeholder:font-light placeholder:text-[14px] flex items-center justify-center w-full min-h-[81px] mb-4 border-2 border-grey-800 p-[20px] resize-none text-neutral-100 rounded-lg focus:border-primary focus:outline-none"
+            />
+          </div>
+        </div>
 
         {/* Tombol NEXT di desktop */}
         <div className="flex items-center justify-center my-13">
           <Button
             className="py-5 px-15 text-white font-semibold text-[18px]"
             onClick={() => {
-              router.push("/booking/step_4");
+              router.push("/booking/step_5");
             }}
           >
             Next
