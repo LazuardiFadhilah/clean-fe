@@ -13,6 +13,7 @@ interface BookingState {
   has_pets?: boolean; // Optional field to indicate if the user has pets
   pet_type?: string; // Optional field to specify the type of pet
   notes?: string; // Optional field for additional notes
+  discount_code?: string; // Optional field for discount code
 }
 
 const initialState: BookingState = {

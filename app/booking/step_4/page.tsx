@@ -1,9 +1,7 @@
+// ================== Import Libraries & Components ==================
 "use client";
-// Import library, komponen UI, ikon, dan fungsi dari Redux
 import { FiX } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
@@ -13,21 +11,19 @@ import { LuShowerHead } from "react-icons/lu";
 import { LuCalendar } from "react-icons/lu";
 import { LiaBroomSolid } from "react-icons/lia";
 import { LuMapPin } from "react-icons/lu";
-import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
+
 import {
   MdKitchen,
   MdOutlineMicrowave,
   MdOutlineDoorSliding,
 } from "react-icons/md";
-
-import * as React from "react";
 import { cn } from "@/lib/utils";
-import { Key } from "lucide-react";
 import { Label } from "@/components/ui/label";
 
-// Komponen utama untuk halaman Booking Step 2
+// ================== Komponen Utama ==================
 export default function Booking() {
+  // ================== Setup State & Dispatch ==================
   const dispatch = useDispatch();
   const {
     bedroom,
@@ -56,18 +52,21 @@ export default function Booking() {
     { key: "No", value: false },
   ];
 
-  const toggleAddOn = (addOn: string) => {
-    const currentAddOns = adds_ons ?? [];
-    const updatedAddOns = currentAddOns.includes(addOn)
-      ? currentAddOns.filter((item) => item !== addOn)
-      : [...currentAddOns, addOn];
+  // ================== Handler Functions ==================
+ const toggleAddOn = (addOn: string) => {
+  const currentAddOns = Array.isArray(adds_ons)
+    ? adds_ons
+    : (typeof adds_ons === "string" ? [adds_ons] : []);
+  const updatedAddOns = currentAddOns.includes(addOn)
+    ? currentAddOns.filter((item) => item !== addOn)
+    : [...currentAddOns, addOn];
 
-    dispatch(setBookingData({ adds_ons: updatedAddOns }));
-  };
+  dispatch(setBookingData({ adds_ons: updatedAddOns }));
+};
 
   return (
     <>
-      {/* Tampilan untuk mobile (md:hidden) */}
+      {/* ================== Mobile View ================== */}
       <div className="flex flex-col mx-[25px] mt-10 md:hidden">
         <div className="flex justify-end">
           <FiX
@@ -176,7 +175,8 @@ export default function Booking() {
           </Label>
           <div className="flex flex-row flex-wrap gap-2">
             {optAddOns.map((add) => {
-              const isSelected = (adds_ons ?? []).includes(add.key);
+              const isSelected =
+                Array.isArray(adds_ons) && adds_ons.includes(add.key);
               return (
                 <div
                   key={add.key}
@@ -241,6 +241,7 @@ export default function Booking() {
         <div className="mb-30" />
       </div>
 
+      {/* ================== */}
       {/* Footer untuk menampilkan subtotal dan tombol NEXT di mobile */}
       <footer className="fixed bottom-0 left-0 w-full z-10 md:hidden">
         <div className="flex flex-row">
@@ -263,8 +264,7 @@ export default function Booking() {
         </div>
       </footer>
 
-      {/* Tampilan header untuk desktop (md:flex) */}
-      {/* Menampilkan ringkasan pemesanan: bedroom, bathroom, cleanType, tanggal, dan alamat */}
+      {/* ================== Desktop Header ================== */}
       <div className="hidden md:flex fixed top-0 left-0 w-full h-[70px] bg-white shadow-md z-10 items-center">
         <div className="w-[60px] h-full flex items-center justify-center border-r-2 border-grey-600">
           <FiX
@@ -335,7 +335,7 @@ export default function Booking() {
         </div>
       </div>
 
-      {/* Calendar versi desktop dengan tampilan lebih besar */}
+      {/* ================== Desktop View ================== */}
       <div className="hidden flex-col md:items-center md:justify-center md:flex pt-[100px] w-[calc(100%-50px)] mx-auto bg-white">
         <div className="flex w-full items-center justify-center">
           <h1 className="text-neutral-100 font-bold text-3xl">
@@ -433,7 +433,8 @@ export default function Booking() {
           </Label>
           <div className="flex flex-row flex-wrap gap-2">
             {optAddOns.map((add) => {
-              const isSelected = (adds_ons ?? []).includes(add.key);
+              const isSelected =
+                Array.isArray(adds_ons) && adds_ons.includes(add.key);
               return (
                 <div
                   key={add.key}
