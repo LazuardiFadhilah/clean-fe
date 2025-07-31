@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FiX } from "react-icons/fi";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { setBookingData } from "@/lib/bookingSlice";
+import { setBookingData, clearBookingData } from "@/lib/bookingSlice";
 import { useState } from "react";
 import {
   LuBedSingle,
@@ -14,6 +14,9 @@ import {
   LuShowerHead,
 } from "react-icons/lu";
 import { LiaBroomSolid } from "react-icons/lia";
+import { billing } from "@/lib/api/billing";
+
+
 
 export default function Step5() {
   const router = useRouter();
@@ -37,6 +40,21 @@ export default function Step5() {
     const discountAmount = subTotal * 0.1;
     newSubTotal = subTotal - discountAmount;
   }
+
+  const onSubmit = async () => {
+      try {
+        
+        const payment = await billing();
+  
+        console.log("Payment successful Added:", payment);
+        dispatch(clearBookingData()); // Clear booking data after successful payment
+        localStorage.removeItem("BookingID"); // Clear BookingID from localStorage
+        router.push("/"); // Redirect ke halaman utama setelah login
+      } catch (error) {
+        console.error("Payment failed:", error);
+        // Handle error, show notification, etc.
+      }
+    };
   return (
     <>
       {/* ================== Mobile View ================== */}
@@ -178,9 +196,7 @@ export default function Step5() {
             </span>
           </div>
           <div
-            onClick={() => {
-              router.push("/booking/step_5");
-            }}
+            onClick={onSubmit}
             className="bg-primary text-white font-semibold text-[18px] w-full items-center justify-center flex"
           >
             NEXT
@@ -246,8 +262,8 @@ export default function Step5() {
           <div className="flex flex-row items-center">
             <LuMapPin className="text-neutral-500" size={20} />
             <div className="flex flex-col pl-2">
-              <h1 className="text-neutral-100 font-semibold text-md">
-                Address
+              <h1 className="text-neutral-100 font-semibold text-md text-ellipsis overflow-hidden whitespace-nowrap max-w-[150px]">
+                {address && address.trim() !== "" ? address : "Address"}
               </h1>
               <h1 className="text-grey-600 font-semibold text-xs">LOCATION</h1>
             </div>
@@ -377,9 +393,7 @@ export default function Step5() {
         <div className="flex items-center justify-center my-13">
           <Button
             className="py-5 px-15 text-white font-semibold text-[18px]"
-            onClick={() => {
-              router.push("/");
-            }}
+            onClick={onSubmit}
           >
             Place Order
           </Button>

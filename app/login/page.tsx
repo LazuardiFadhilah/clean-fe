@@ -30,6 +30,7 @@ export default function Login() {
       const user = await LoginUser({ email, password });
 
       console.log("Login successful:", user);
+      localStorage.setItem("token", user.data.token); // Simpan token ke localStorage
       router.push("/"); // Redirect ke halaman utama setelah login
     } catch (error) {
       setErrorMsg("email atau password salah");

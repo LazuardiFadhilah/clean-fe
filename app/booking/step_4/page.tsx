@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import { calculateSubTotal, setBookingData } from "@/lib/bookingSlice";
+import { setBookingData } from "@/lib/bookingSlice";
 import { LuBedSingle } from "react-icons/lu";
 import { LuShowerHead } from "react-icons/lu";
 import { LuCalendar } from "react-icons/lu";
 import { LiaBroomSolid } from "react-icons/lia";
 import { LuMapPin } from "react-icons/lu";
 import { Input } from "@/components/ui/input";
+import { booking, updateBooking } from "@/lib/api/booking";
 
 import {
   MdKitchen,
@@ -41,7 +42,7 @@ export default function Booking() {
   } = useSelector((state: RootState) => state.booking);
   const router = useRouter();
   const optFrequencies = ["one-time", "weekly", "bi-weekly", "monthly"];
-  const optEntryMethods = ["someone home", "doorman", "hidden key", "other"];
+  const optEntryMethods = ["someone_home", "doorman", "hidden_key", "other"];
   const optAddOns = [
     { key: "inside fridge", icon: <MdKitchen size={20} /> },
     { key: "inside oven", icon: <MdOutlineMicrowave size={20} /> },
@@ -53,16 +54,67 @@ export default function Booking() {
   ];
 
   // ================== Handler Functions ==================
- const toggleAddOn = (addOn: string) => {
-  const currentAddOns = Array.isArray(adds_ons)
-    ? adds_ons
-    : (typeof adds_ons === "string" ? [adds_ons] : []);
-  const updatedAddOns = currentAddOns.includes(addOn)
-    ? currentAddOns.filter((item) => item !== addOn)
-    : [...currentAddOns, addOn];
+  const toggleAddOn = (addOn: string) => {
+    const currentAddOns = Array.isArray(adds_ons)
+      ? adds_ons
+      : typeof adds_ons === "string"
+      ? [adds_ons]
+      : [];
+    const updatedAddOns = currentAddOns.includes(addOn)
+      ? currentAddOns.filter((item) => item !== addOn)
+      : [...currentAddOns, addOn];
 
-  dispatch(setBookingData({ adds_ons: updatedAddOns }));
-};
+    dispatch(setBookingData({ adds_ons: updatedAddOns }));
+  };
+
+  const onSubmit = async () => {
+    // Ambil data dari Redux store
+    const bedroomValue = bedroom === "Studio" ? "1" : bedroom;
+    const bookingData = {
+      bedroom: bedroomValue,
+      bathroom,
+      clean_type: cleanType,
+      date,
+      time: "09:00", // Jika belum ada di Redux, bisa pakai default atau ambil dari state time picker
+      is_flexible: true, // Kalau belum ada input di UI, set default
+      frequency,
+      address,
+      entry_method,
+      add_ons: adds_ons, // pastikan ini array string
+      has_pets,
+      pet_type,
+      notes,
+    };
+    
+
+    if (localStorage.getItem("BookingID") !== null) {
+      try {
+        console.log("Booking Data:", bookingData);
+
+        // Kirim ke API booking
+
+        const res = await updateBooking(bookingData);
+
+        console.log("Booking successful:", res);
+        router.push("/booking/step_5");
+      } catch (error) {
+        console.error("Booking failed:", error);
+      }
+    } else {
+     try {
+        console.log("Booking Data:", bookingData);
+
+        // Kirim ke API booking
+
+        const res = await booking(bookingData);
+
+        console.log("Booking successful:", res);
+        router.push("/booking/step_5");
+      } catch (error) {
+        console.error("Booking failed:", error);
+      }
+    }
+  };
 
   return (
     <>
@@ -119,11 +171,11 @@ export default function Booking() {
           </div>
         </div>
         <span className="text-neutral-100 text-[25px] font-bold text-left mt-[37px]">
-          Add Your Address & Detalis
+          Add Your Address & Details
         </span>
         <div className="flex flex-col my-[10px]">
           <span className="text-neutral-500 font-light text-[15px] text-left">
-            Be spesific of any additional details we might need from you.
+            Be specific of any additional details we might need from you.
           </span>
         </div>
 
@@ -255,7 +307,8 @@ export default function Booking() {
           </div>
           <div
             onClick={() => {
-              router.push("/booking/step_5");
+              onSubmit();
+             
             }}
             className="bg-primary text-white font-semibold text-[18px] w-full items-center justify-center flex"
           >
@@ -377,11 +430,11 @@ export default function Booking() {
           </div>
         </div>
         <span className="text-neutral-100 text-[25px] font-bold text-left mt-[37px]">
-          Add Your Address & Detalis
+          Add Your Address & Details
         </span>
         <div className="flex flex-col my-[10px]">
           <span className="text-neutral-500 font-light text-[15px] text-left">
-            Be spesific of any additional details we might need from you.
+            Be specific of any additional details we might need from you.
           </span>
         </div>
 
@@ -502,7 +555,8 @@ export default function Booking() {
           <Button
             className="py-5 px-15 text-white font-semibold text-[18px]"
             onClick={() => {
-              router.push("/booking/step_5");
+              onSubmit();
+          
             }}
           >
             Next

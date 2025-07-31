@@ -33,27 +33,25 @@ export default function Booking() {
   // Opsi jumlah kamar mandi yang dapat dipilih user
   const optBathroom = ["1", "2", "3", "4", "5"];
 
-  // Tipe pembersihan yang tersedia
-  type CleanType =
-    | "Standard"
-    | "Deep Clean"
-    | "Moving In/Out"
-    | "Post Construction";
+type CleanType =
+  | "standard"
+  | "deep"
+  | "moving"
+  | "post-construction";
 
-  // Array tipe pembersihan untuk mapping dan rendering pilihan
-  const optCleanType: CleanType[] = [
-    "Standard",
-    "Deep Clean",
-    "Moving In/Out",
-    "Post Construction",
-  ];
+const optCleanType: CleanType[] = [
+  "standard",
+  "deep",
+  "moving",
+  "post-construction",
+];
 
   // Durasi estimasi untuk tiap tipe pembersihan
   const durationClean: Record<CleanType, string> = {
-    Standard: "2 hours",
-    "Deep Clean": "2.5 hours",
-    "Moving In/Out": "4.5–5 hours",
-    "Post Construction": "4.5–5 hours",
+    standard: "2 hours",
+    "deep": "2.5 hours",
+    "moving": "4.5–5 hours",
+    "post-construction": "4.5–5 hours",
   };
 
   // useEffect untuk mengupdate booking data dan menghitung subtotal setiap kali data berubah
