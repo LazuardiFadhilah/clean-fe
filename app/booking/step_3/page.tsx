@@ -2,18 +2,16 @@
 // Import library, komponen UI, ikon, dan fungsi dari Redux
 import { FiX } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import { calculateSubTotal, setBookingData } from "@/lib/bookingSlice";
+import {  setBookingData } from "@/lib/bookingSlice";
 import { LuBedSingle } from "react-icons/lu";
 import { LuShowerHead } from "react-icons/lu";
 import { LuCalendar } from "react-icons/lu";
 import { LiaBroomSolid } from "react-icons/lia";
 import { LuMapPin } from "react-icons/lu";
-import { Calendar } from "@/components/ui/calendar";
 
 import * as React from "react";
 import { cn } from "@/lib/utils";

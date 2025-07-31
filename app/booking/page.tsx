@@ -4,7 +4,7 @@ import { FiX } from "react-icons/fi";
 // Button UI component yang digunakan untuk pilihan user
 import { Button } from "@/components/ui/button";
 // State & lifecycle hooks dari React
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 // Hook navigasi Next.js
 import { useRouter } from "next/navigation";
 // Redux hooks & slice state
