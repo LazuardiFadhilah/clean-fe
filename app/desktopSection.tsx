@@ -4,12 +4,10 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ArticleCard from "@/components/articleCard";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { useDispatch } from "react-redux";
