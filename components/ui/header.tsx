@@ -45,7 +45,7 @@ export default function Header() {
               <span className="lg:text-lg text-sm">Residential</span>
               <span className="lg:text-lg text-sm">Office</span>
               <span className="lg:text-lg text-sm">Commercial</span>
-              <span className="lg:text-lg text-sm">FAQ's</span>
+              <span className="lg:text-lg text-sm">FAQ&apos;s</span>
             </div>
 
             {/* Login Button */}
@@ -101,7 +101,7 @@ export default function Header() {
             <span className="hover:text-primary cursor-pointer">
               Commercial
             </span>
-            <span className="hover:text-primary cursor-pointer">FAQ's</span>
+            <span className="hover:text-primary cursor-pointer">FAQ&apos;s</span>
           </div>
 
           {/* Bottom Login Button */}

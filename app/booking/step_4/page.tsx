@@ -134,7 +134,7 @@ export default function Booking() {
         </span>
         <div className="flex flex-col my-[10px]">
           <span className="text-neutral-500 font-light text-[15px] text-left">
-            Book for Shield's recurring plan and save 20% annually.
+            Book for Shield&apos;s recurring plan and save 20% annually.
           </span>
         </div>
 

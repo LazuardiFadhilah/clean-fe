@@ -33,6 +33,7 @@ export default function Login() {
       localStorage.setItem("token", user.data.token); // Simpan token ke localStorage
       router.push("/"); // Redirect ke halaman utama setelah login
     } catch (error) {
+      console.error("Login failed:", error);
       setErrorMsg("email atau password salah");
     }
   };
@@ -112,7 +113,7 @@ export default function Login() {
             Continue
           </Button>
           <span className="text-sm text-neutral-400 mt-[20px]">
-            Don't have an account?
+            Don&apos;t have an account?
             <Link
               href="/signup"
               className="text-primary text-sm hover:underline ml-[5px] font-semibold"

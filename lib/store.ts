@@ -37,8 +37,11 @@ export const store = configureStore({
 });
 
 // Buat persistor hanya di client-side
-export const persistor =
-  typeof window !== 'undefined' ? persistStore(store) : { persist: () => null } as any;
+// export const persistor =
+//   typeof window !== 'undefined' ? persistStore(store) : { persist: () => null } as any;
+export const persistor = typeof window !== 'undefined'
+  ? persistStore(store)
+  : (null as unknown as ReturnType<typeof persistStore>);
 
 // Types
 export type RootState = ReturnType<typeof store.getState>;
