@@ -39,8 +39,8 @@ export default function SignUp() {
 
       console.log("Register successful:", user);
       router.push("/"); // Redirect ke halaman utama setelah login
-    } catch (error: any) {
-      if ((error.message = "E11000")) {
+    } catch (error: unknown) {
+      if (((error as Error).message = "E11000")) {
         setErrorMsg("Email already exists. Please use a different email.");
         return;
       }
