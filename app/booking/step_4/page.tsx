@@ -13,7 +13,7 @@ import { LiaBroomSolid } from "react-icons/lia";
 import { LuMapPin } from "react-icons/lu";
 import { Input } from "@/components/ui/input";
 import { booking, updateBooking } from "@/lib/api/booking";
-
+import { useEffect } from "react";
 import {
   MdKitchen,
   MdOutlineMicrowave,
@@ -41,8 +41,13 @@ export default function Booking() {
     notes,
   } = useSelector((state: RootState) => state.booking);
   const router = useRouter();
+  // Reset adds_ons to [] when component mounts
+  useEffect(() => {
+    dispatch(setBookingData({ adds_ons: [] }));
+  }, [dispatch]);
   const optFrequencies = ["one-time", "weekly", "bi-weekly", "monthly"];
   const optEntryMethods = ["someone_home", "doorman", "hidden_key", "other"];
+  // Hardcode add_ons keys as per backend enum, and use label for display
   const optAddOns = [
     { key: "inside_fridge", label: "Inside Fridge", icon: <MdKitchen size={20} /> },
     { key: "inside_oven", label: "Inside Oven", icon: <MdOutlineMicrowave size={20} /> },
@@ -54,16 +59,15 @@ export default function Booking() {
   ];
 
   // ================== Handler Functions ==================
-  const toggleAddOn = (addOn: string) => {
+  const toggleAddOn = (addOnKey: string) => {
     const currentAddOns = Array.isArray(adds_ons)
       ? adds_ons
       : typeof adds_ons === "string"
       ? [adds_ons]
       : [];
-    const updatedAddOns = currentAddOns.includes(addOn)
-      ? currentAddOns.filter((item) => item !== addOn)
-      : [...currentAddOns, addOn];
-
+    const updatedAddOns = currentAddOns.includes(addOnKey)
+      ? currentAddOns.filter((item) => item !== addOnKey)
+      : [...currentAddOns, addOnKey];
     dispatch(setBookingData({ adds_ons: updatedAddOns }));
   };
 
