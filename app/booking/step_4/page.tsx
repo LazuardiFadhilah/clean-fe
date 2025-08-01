@@ -70,6 +70,7 @@ export default function Booking() {
   const onSubmit = async () => {
     // Ambil data dari Redux store
     const bedroomValue = bedroom === "Studio" ? "1" : bedroom;
+    // Pastikan add_ons sesuai model backend dan array string
     const bookingData = {
       bedroom: bedroomValue,
       bathroom,
@@ -80,34 +81,27 @@ export default function Booking() {
       frequency,
       address,
       entry_method,
-      add_ons: adds_ons, // pastikan ini array string
+      add_ons: Array.isArray(adds_ons) ? adds_ons : [], // key dan format sesuai backend
       has_pets,
       pet_type,
       notes,
     };
-    
 
     if (localStorage.getItem("BookingID") !== null) {
       try {
         console.log("Booking Data:", bookingData);
-
         // Kirim ke API booking
-
         const res = await updateBooking(bookingData);
-
         console.log("Booking successful:", res);
         router.push("/booking/step_5");
       } catch (error) {
         console.error("Booking failed:", error);
       }
     } else {
-     try {
+      try {
         console.log("Booking Data:", bookingData);
-
         // Kirim ke API booking
-
         const res = await booking(bookingData);
-
         console.log("Booking successful:", res);
         router.push("/booking/step_5");
       } catch (error) {
