@@ -44,9 +44,9 @@ export default function Booking() {
   const optFrequencies = ["one-time", "weekly", "bi-weekly", "monthly"];
   const optEntryMethods = ["someone_home", "doorman", "hidden_key", "other"];
   const optAddOns = [
-    { key: "inside fridge", icon: <MdKitchen size={20} /> },
-    { key: "inside oven", icon: <MdOutlineMicrowave size={20} /> },
-    { key: "inside cabinets", icon: <MdOutlineDoorSliding size={20} /> },
+    { key: "inside_fridge", icon: <MdKitchen size={20} /> },
+    { key: "inside_oven", icon: <MdOutlineMicrowave size={20} /> },
+    { key: "inside_cabinets", icon: <MdOutlineDoorSliding size={20} /> },
   ];
   const optHasPets = [
     { key: "Yes", value: true },
