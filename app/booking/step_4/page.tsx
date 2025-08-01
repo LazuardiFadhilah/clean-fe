@@ -44,9 +44,9 @@ export default function Booking() {
   const optFrequencies = ["one-time", "weekly", "bi-weekly", "monthly"];
   const optEntryMethods = ["someone_home", "doorman", "hidden_key", "other"];
   const optAddOns = [
-    { key: "inside_fridge", icon: <MdKitchen size={20} /> },
-    { key: "inside_oven", icon: <MdOutlineMicrowave size={20} /> },
-    { key: "inside_cabinets", icon: <MdOutlineDoorSliding size={20} /> },
+    { key: "inside_fridge", label: "Inside Fridge", icon: <MdKitchen size={20} /> },
+    { key: "inside_oven", label: "Inside Oven", icon: <MdOutlineMicrowave size={20} /> },
+    { key: "inside_cabinets", label: "Inside Cabinets", icon: <MdOutlineDoorSliding size={20} /> },
   ];
   const optHasPets = [
     { key: "Yes", value: true },
@@ -235,7 +235,7 @@ export default function Booking() {
                   )}
                 >
                   {add.icon}
-                  <span className="font-semibold text-[14px]">{add.key}</span>
+                  <span className="font-semibold text-[14px]">{add.label}</span>
                 </div>
               );
             })}
@@ -494,7 +494,7 @@ export default function Booking() {
                   )}
                 >
                   {add.icon}
-                  <span className="font-semibold text-[14px]">{add.key}</span>
+                  <span className="font-semibold text-[14px]">{add.label}</span>
                 </div>
               );
             })}
